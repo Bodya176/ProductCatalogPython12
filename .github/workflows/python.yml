@@ -1,0 +1,35 @@
+# Назва робочого процесу
+name: Python application test
+
+# Тригери
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Крок 1: Завантаження коду
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # Крок 2: Налаштування середовища Python
+      - name: Set up Python 3.13
+        uses: actions/setup-python@v5
+        with:
+          python-version: 3.13
+
+      # Крок 3: Встановлення залежностей
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      # Крок 4: Запуск тестів за допомогою pytest
+      - name: Test with pytest
+        run: |
+          pytest
